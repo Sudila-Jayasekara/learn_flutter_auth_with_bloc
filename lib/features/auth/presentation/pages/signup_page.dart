@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:learn_flutter_auth_with_bloc/core/theme/app_palette.dart';
 import 'package:learn_flutter_auth_with_bloc/features/auth/presentation/widgets/auth_field.dart';
 import 'package:learn_flutter_auth_with_bloc/features/auth/presentation/widgets/auth_button.dart';
@@ -58,19 +59,24 @@ class _SignupPageState extends State<SignupPage> {
               AuthButton(buttonText: "Sign Up",),
               SizedBox(height: 15),
           
-              RichText(
-                text: TextSpan(
-                  text: 'Already have and account?',
-                  style: Theme.of(context).textTheme.titleMedium,
-                  children: [
-                    TextSpan(
-                      text: ' Sign In',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AppPalette.blueColor,
-                        fontWeight: FontWeight.bold
+              GestureDetector(
+                onTap: () {
+                  context.go('/signin');
+                },
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Already have and account?',
+                    style: Theme.of(context).textTheme.titleMedium,
+                    children: [
+                      TextSpan(
+                        text: ' Sign In',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: AppPalette.blueColor,
+                          fontWeight: FontWeight.bold
+                        )
                       )
-                    )
-                  ]
+                    ]
+                  ),
                 ),
               ),
             ],
