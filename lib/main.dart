@@ -27,14 +27,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        // Handle global navigation based on auth state
+        // Global navigation based on auth state
         if (state is AuthAuthenticated) {
           AppRouter.router.go('/home');
         } else if (state is AuthUnauthenticated) {
           AppRouter.router.go('/signin');
         }
       },
-
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Auth App',
