@@ -27,10 +27,12 @@ class _SigninPageState extends State<SigninPage> {
 
   void _onSignInPressed(BuildContext context) {
     if (formKey.currentState?.validate() ?? false) {
-      context.read<AuthBloc>().add(AuthSignInRequested(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      ));
+      context.read<AuthBloc>().add(
+        AuthSignInRequested(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        ),
+      );
     }
   }
 
@@ -40,10 +42,11 @@ class _SigninPageState extends State<SigninPage> {
       appBar: AppBar(),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
+          if (ModalRoute.of(context)?.isCurrent != true) return;// this prevent active this listener for signup page, this will only active for signin page
           if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         builder: (context, state) {
@@ -56,13 +59,13 @@ class _SigninPageState extends State<SigninPage> {
                 children: [
                   Text(
                     "Sign In",
-                    style: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 30),
-                  AuthField(
-                    hintText: 'Email',
-                    controller: emailController,
-                  ),
+                  AuthField(hintText: 'Email', controller: emailController),
                   const SizedBox(height: 15),
                   AuthField(
                     hintText: 'Password',
@@ -70,12 +73,11 @@ class _SigninPageState extends State<SigninPage> {
                     isObscureText: true,
                   ),
                   const SizedBox(height: 20),
-                  state is AuthLoading
-                      ? const CircularProgressIndicator()
-                      : AuthButton(
-                          buttonText: "Sign In",
-                          onPressed: () => _onSignInPressed(context),
-                        ),
+                  AuthButton(
+                    buttonText: "Sign In",
+                    onPressed: () => _onSignInPressed(context),
+                    isLoading: state is AuthLoading,
+                  ),
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () {
@@ -88,7 +90,9 @@ class _SigninPageState extends State<SigninPage> {
                         children: [
                           TextSpan(
                             text: ' Sign Up',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            style: Theme.of(
+                              context,
+                            ).textTheme.titleMedium?.copyWith(
                               color: AppPalette.blueColor,
                               fontWeight: FontWeight.bold,
                             ),
