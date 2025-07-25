@@ -9,6 +9,7 @@ class AppPalette {
   static const Color whiteColor = Colors.white;
   static const Color blueColor = Color(0xFF1877F2);
   static const Color greyColor = Colors.grey;
-  static const Color errorColor = Colors.redAccent;
+  static const Color redColor = Colors.redAccent;
+  static const Color greenColor = Color(0xFF00C853);
   static const Color transparentColor = Colors.transparent;
 }
