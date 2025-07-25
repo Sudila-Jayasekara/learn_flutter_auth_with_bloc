@@ -27,6 +27,7 @@ class _SigninPageState extends State<SigninPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Form(
@@ -50,12 +51,12 @@ class _SigninPageState extends State<SigninPage> {
               ),
               SizedBox(height: 20),
 
-              AuthButton(buttonText: "Sign In",),
+              AuthButton(buttonText: "Sign In"),
               SizedBox(height: 15),
 
               GestureDetector(
                 onTap: () {
-                  context.go('/signup');
+                  context.push('/signup');
                 },
                 child: RichText(
                   text: TextSpan(
@@ -64,7 +65,9 @@ class _SigninPageState extends State<SigninPage> {
                     children: [
                       TextSpan(
                         text: ' Sign Up',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        style: Theme.of(
+                          context,
+                        ).textTheme.titleMedium?.copyWith(
                           color: AppPalette.blueColor,
                           fontWeight: FontWeight.bold,
                         ),
