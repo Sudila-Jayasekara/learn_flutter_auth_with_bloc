@@ -3,7 +3,7 @@ import 'package:learn_flutter_auth_with_bloc/core/theme/app_palette.dart';
 
 class AppTheme {
   static _border([Color color = AppPalette.borderColor]) => OutlineInputBorder(
-    borderSide: BorderSide(color: color, width: 1),
+    borderSide: BorderSide(color: color, width: 2),
     borderRadius: BorderRadius.circular(10),
   );
 
@@ -13,6 +13,9 @@ class AppTheme {
       contentPadding: EdgeInsets.all(20),
       enabledBorder: _border(),
       focusedBorder: _border(AppPalette.blueColor),
+      errorBorder: _border(AppPalette.redColor),
+      focusedErrorBorder: _border(AppPalette.redColor),
+      errorStyle: TextStyle(color: AppPalette.redColor),
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
