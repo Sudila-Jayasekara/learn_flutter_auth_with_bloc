@@ -32,12 +32,14 @@ class _SignupPageState extends State<SignupPage> {
 
   void _onSignUpPressed(BuildContext context) {
     if (formKey.currentState?.validate() ?? false) {
-      context.read<AuthBloc>().add(AuthSignUpRequested(
-        firstName: firstNameController.text.trim(),
-        lastName: lastNameController.text.trim(),
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
-      ));
+      context.read<AuthBloc>().add(
+        AuthSignUpRequested(
+          firstName: firstNameController.text.trim(),
+          lastName: lastNameController.text.trim(),
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        ),
+      );
     }
   }
 
@@ -47,9 +49,19 @@ class _SignupPageState extends State<SignupPage> {
       appBar: AppBar(),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
+          if (ModalRoute.of(context)?.isCurrent != true) return;
           if (state is AuthError) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
+          } else if (state is AuthUnauthenticated) {
+            // context.go('/signin'); already handling from main.dart
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
+              SnackBar(
+                content: Text(
+                  "Sign Up Successful! Please Sign In.",
+                ),
+              ),
             );
           }
         },
@@ -63,7 +75,10 @@ class _SignupPageState extends State<SignupPage> {
                 children: [
                   Text(
                     "Sign Up",
-                    style: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 30),
                   AuthField(
@@ -76,10 +91,7 @@ class _SignupPageState extends State<SignupPage> {
                     controller: lastNameController,
                   ),
                   const SizedBox(height: 15),
-                  AuthField(
-                    hintText: 'Email',
-                    controller: emailController,
-                  ),
+                  AuthField(hintText: 'Email', controller: emailController),
                   const SizedBox(height: 15),
                   AuthField(
                     hintText: 'Password',
@@ -87,12 +99,11 @@ class _SignupPageState extends State<SignupPage> {
                     isObscureText: true,
                   ),
                   const SizedBox(height: 20),
-                  state is AuthLoading
-                      ? const CircularProgressIndicator()
-                      : AuthButton(
-                          buttonText: "Sign Up",
-                          onPressed: () => _onSignUpPressed(context),
-                        ),
+                  AuthButton(
+                    buttonText: "Sign Up",
+                    onPressed: () => _onSignUpPressed(context),
+                    isLoading: state is AuthLoading,
+                  ),
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () {
@@ -105,7 +116,9 @@ class _SignupPageState extends State<SignupPage> {
                         children: [
                           TextSpan(
                             text: ' Sign In',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            style: Theme.of(
+                              context,
+                            ).textTheme.titleMedium?.copyWith(
                               color: AppPalette.blueColor,
                               fontWeight: FontWeight.bold,
                             ),
