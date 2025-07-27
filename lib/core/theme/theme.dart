@@ -3,7 +3,7 @@ import 'package:learn_flutter_auth_with_bloc/core/theme/app_palette.dart';
 
 class AppTheme {
   static _border([Color color = AppPalette.borderColor]) => OutlineInputBorder(
-    borderSide: BorderSide(color: color, width: 2),
+    borderSide: BorderSide(color: color, width: 1),
     borderRadius: BorderRadius.circular(10),
   );
 
@@ -16,6 +16,18 @@ class AppTheme {
       errorBorder: _border(AppPalette.redColor),
       focusedErrorBorder: _border(AppPalette.redColor),
       errorStyle: TextStyle(color: AppPalette.redColor),
+      labelStyle: WidgetStateTextStyle.resolveWith((states) {
+        if (states.contains(WidgetState.error)) {
+          return TextStyle(color: AppPalette.redColor);
+        }
+        return TextStyle(color: AppPalette.whiteColor);
+      }),
+      floatingLabelStyle: WidgetStateTextStyle.resolveWith((states) {
+        if (states.contains(WidgetState.error)) {
+          return TextStyle(color: AppPalette.redColor);
+        }
+        return TextStyle(color: AppPalette.blueColor);
+      }),
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(

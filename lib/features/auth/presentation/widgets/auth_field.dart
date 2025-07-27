@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AuthField extends StatelessWidget {
+  final String labelText;
   final String hintText;
   final TextEditingController controller;
   final bool isObscureText;
@@ -8,6 +9,7 @@ class AuthField extends StatelessWidget {
 
   const AuthField({
     super.key,
+    required this.labelText,
     required this.hintText,
     required this.controller,
     this.isObscureText = false,
@@ -19,6 +21,7 @@ class AuthField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
+        labelText: labelText,
         hintText: hintText,
       ),
       validator: validator ?? (value) {

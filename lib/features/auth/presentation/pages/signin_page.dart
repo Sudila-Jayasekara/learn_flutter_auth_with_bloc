@@ -65,10 +65,11 @@ class _SigninPageState extends State<SigninPage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  AuthField(hintText: 'Email', controller: emailController),
+                  AuthField(labelText: 'Email', hintText: 'Enter your email', controller: emailController),
                   const SizedBox(height: 15),
                   AuthField(
-                    hintText: 'Password',
+                    labelText: 'Password',
+                    hintText: 'Enter your password',
                     controller: passwordController,
                     isObscureText: true,
                   ),
